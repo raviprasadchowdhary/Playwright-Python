@@ -84,25 +84,43 @@ print(animal_walk(dog_features))
 print(animal_walk(bird_features))
 
 # Encapsulation in Python
+# here we are creating a class with private attributes and methods
+# here __ before the attribute makes it private
+# here __ after the attribute makes it private
+# here __ before and after the method makes it private
 class BankAccount:
-    def __init__(self, balance):
-        self.__balance = balance  # private attribute
+    def __init__(self, account_number, balance):
+        self.account_number__ = account_number
+        self.balance__ = balance
+
     def deposit(self, amount):
-        self.__balance += amount
-        print(f"Deposited: {amount}")
+        self.balance__ += amount
+
     def withdraw(self, amount):
-        if amount <= self.__balance:
-            self.__balance -= amount
-            print(f"Withdrew: {amount}")
-        else:
+        if amount > self.balance__:
             print("Insufficient balance")
+        else:
+            self.balance__ -= amount
+
     def get_balance(self):
-        return self.__balance
+        return self.balance__
+
 # creating an object of BankAccount
-account = BankAccount(1000)
-account.deposit(500)
-account.withdraw(200)
-print("Current Balance:", account.get_balance())
+account1 = BankAccount(123, 1000)
+account2 = BankAccount(456, 2500)
+
+# accessing public methods
+# adding money in account1
+account1.deposit(500)
+print(f"Account1 balance after deposit: {account1.get_balance()}")
+# withdrawing money from account2
+account1.withdraw(1500)
+print("Account1 balance after withdrawal: ", account1.get_balance())
+
+# error demonstration
+account2.withdraw(2600)
+print("Account2 balamce after failed withdrawal: ", account2.get_balance())
+
 # trying to access private attribute will raise an error
 # print(account.__balance)  # Uncommenting this line will raise an AttributeError
 
