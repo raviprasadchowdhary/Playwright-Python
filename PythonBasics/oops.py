@@ -2,22 +2,22 @@
 
 # Class and Object in Python
 # this is a simple calculator class with basic operations
-class calculator:
+class Calculator:
     def add(self, num1, num2):
         return num1+num2
-    def substract(self, num1, num2):
+    def subtract(self, num1, num2):
         return num1-num2
     def multiply(self, num1, num2):
         return num1*num2
-    def devide(self, num1, num2):
+    def divide(self, num1, num2):
         return num1/num2
 
 # this is how we create an object of a class
-calc = calculator()
+calc = Calculator()
 print("Addition of 1 & 2 is: ", calc.add(1,2))
-print("Substraction of 2 & 1 is: ", calc.substract(2,1))
+print("Substraction of 2 & 1 is: ", calc.subtract(2, 1))
 print("Multiplication of 2 & 3 is: ", calc.multiply(2,3))
-print("Division of 6 & 2 is: ", calc.devide(6,2))
+print("Division of 6 & 2 is: ", calc.divide(6, 2))
 
 # Constructor in Python
 class Person:
@@ -63,11 +63,11 @@ print("Cat-specialty: ", cat.specialty()) # Output: This animal is very agile
 # Polymorphism in Python
 # polymorphism is the ability to use a common interface for multiple forms (data types).
 # creating two classes with the same method name
-class Dog_Features:
+class DogFeatures:
     def walk(self):
         return str(self.__class__.__name__) , " walks on 4 legs"
 
-class Bird_Features:
+class BirdFeatures:
     def walk(self):
         return str(self.__class__.__name__), " walks on 2 legs"
 
@@ -76,8 +76,8 @@ def animal_walk(animal):
     return animal.walk()
 
 # creating objects
-dog_features = Dog_Features()
-bird_features = Bird_Features()
+dog_features = DogFeatures()
+bird_features = BirdFeatures()
 
 # calling the walk method on different objects
 print(animal_walk(dog_features))
