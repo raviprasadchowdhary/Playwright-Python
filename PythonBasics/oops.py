@@ -86,24 +86,23 @@ print(animal_walk(bird_features))
 # Encapsulation in Python
 # here we are creating a class with private attributes and methods
 # here __ before the attribute makes it private
-# here __ after the attribute makes it private
-# here __ before and after the method makes it private
+# here __ before the method makes it private
 class BankAccount:
     def __init__(self, account_number, balance):
-        self.account_number__ = account_number
-        self.balance__ = balance
+        self.__account_number = account_number
+        self.__balance = balance
 
     def deposit(self, amount):
-        self.balance__ += amount
+        self.__balance += amount
 
     def withdraw(self, amount):
-        if amount > self.balance__:
+        if amount > self.__balance:
             print("Insufficient balance")
         else:
-            self.balance__ -= amount
+            self.__balance -= amount
 
     def get_balance(self):
-        return self.balance__
+        return self.__balance
 
 # creating an object of BankAccount
 account1 = BankAccount(123, 1000)
@@ -113,16 +112,16 @@ account2 = BankAccount(456, 2500)
 # adding money in account1
 account1.deposit(500)
 print(f"Account1 balance after deposit: {account1.get_balance()}")
-# withdrawing money from account2
+# withdrawing money from account1
 account1.withdraw(1500)
 print("Account1 balance after withdrawal: ", account1.get_balance())
 
 # error demonstration
 account2.withdraw(2600)
-print("Account2 balamce after failed withdrawal: ", account2.get_balance())
+print("Account2 balance after failed withdrawal: ", account2.get_balance())
 
 # trying to access private attribute will raise an error
-# print(account.__balance)  # Uncommenting this line will raise an AttributeError
+print(account1.__balance) # Uncommenting this line will raise an AttributeError
 
 # Abstraction in Python
 from abc import ABC, abstractmethod
