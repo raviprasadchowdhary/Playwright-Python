@@ -148,12 +148,10 @@ print(account1.__balance)  # Uncommenting this line will raise an AttributeError
 from abc import ABC, \
     abstractmethod  # here abc is abstract base class, ABC is a module, abstractmethod is a decorator, we use it to define abstract methods, which are methods that have a declaration but do not have an implementation, we cannot create objects of abstract classes, we need to create a derived class that implements the abstract methods, then we can create objects of the derived class, and use the methods defined in the abstract class, we use abstraction to hide the complexity of the system and show only the essential features to the user
 
-
 class Shape(ABC):
     @abstractmethod
     def area(self):
         pass
-
 
 class Rectangle(Shape):
     def __init__(self, width, height):
