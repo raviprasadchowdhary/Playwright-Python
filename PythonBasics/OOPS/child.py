@@ -1,4 +1,4 @@
-from PythonBasics.OOPS.Parent import BaseCarModel
+from PythonBasics.OOPS.parent import BaseCarModel
 
 
 class DeluxeCarModel(BaseCarModel):
