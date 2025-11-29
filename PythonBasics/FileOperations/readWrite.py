@@ -35,11 +35,11 @@ lines = file.readlines()
 print(f"All lines in the file are:\n")
 for i in lines:
     print(f"{i}")
+# move the cursor to the beginning of the file
+file.seek(0)
 
 # read all lines in the file using a loop
-file.seek(0) # move the cursor to the beginning of the file
 print(f"\nReading file line by line using a loop:\n")
-
 line = file.readline()
 while line != "":
     print(f"{line}")
