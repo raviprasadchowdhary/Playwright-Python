@@ -14,5 +14,5 @@ def test_core_locators(page:Page):
     page.get_by_role("combobox").select_option("consult")
     # print(page.get_by_role("button"))
     page.get_by_role("button", name="Sign In").click()
-    # Automatic wait
+    # Auto-wait
     expect(page.get_by_text("Incorrect username/password.")).to_be_visible()
