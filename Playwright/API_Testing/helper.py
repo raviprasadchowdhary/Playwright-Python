@@ -16,6 +16,10 @@ def addToCartZaraCoat3(playwright):
                                                   , headers={"Authorization": getAuthToken(playwright)}
                                               )
 
+def createOrder(playwright):
+    return apiRequestContext(playwright).post(url= "/api/ecom/order/create-order"
+                                       , headers={"Authorization": getAuthToken(playwright)}
+                                       , data=createOrderRequestBodyZaraCoat3)
 
 userEmail = "RahulKumar@gmail.com"
 userPassword = "Rahul@123"
