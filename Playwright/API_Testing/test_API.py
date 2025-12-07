@@ -2,6 +2,7 @@ from Playwright.API_Testing.helper import *
 
 
 def test_getAuthToken(playwright):
+    print(f"\nexecution of getAuthToken is started...")
     authToken = getAuthToken(playwright)
     print(f"Authentication token is: {authToken}")
 
