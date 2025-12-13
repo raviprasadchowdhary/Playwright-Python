@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 
 
-def test_core_locators(page:Page):
+def test_core_locators(page: Page):
     page.goto("https://rahulshettyacademy.com/loginpagePractise/")
     # labels
     page.get_by_label("Username:").fill("rahulshettyacademy")

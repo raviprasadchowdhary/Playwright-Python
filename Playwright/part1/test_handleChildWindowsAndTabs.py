@@ -17,5 +17,3 @@ def test_handleChildWindowsAndTabs(page: Page):
     emailId = textContent.split("at")[1].split("with")[0].strip()
     print(f"\nExtracted email id is: {emailId}")
     assert emailId == "mentor@rahulshettyacademy.com"
-
-

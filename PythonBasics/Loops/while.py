@@ -5,7 +5,7 @@
 # if the condition is no longer true, the loop exits
 # then print a message when the loop is exited
 i = 5
-while i>0:
+while i > 0:
     print(i)
     i -= 1
 print("While loop exited")
@@ -34,7 +34,7 @@ print("While loop exited")
 # You can also use break statements to exit a while loop prematurely
 # For example:
 j = 5
-while j>0:
+while j > 0:
     print(j)
     if j == 3:
         print("Breaking the loop at j =", j)
@@ -51,7 +51,7 @@ while j>0:
 
 # You can also use the 'continue' statement to skip the current iteration and move to the next one
 k = 5
-while k>0:
+while k > 0:
     k -= 1
     if k == 2:
         print("Skipping the number", k)

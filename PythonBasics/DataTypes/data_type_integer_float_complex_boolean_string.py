@@ -1,8 +1,8 @@
-a = 3                   # Integer
-b = 4.5                 # Float
-c = "Hello, World!"     # String
-d = True                # Boolean
-e = 3 + 4j              # Complex Number
+a = 3  # Integer
+b = 4.5  # Float
+c = "Hello, World!"  # String
+d = True  # Boolean
+e = 3 + 4j  # Complex Number
 
 print("Integer:", a)
 print("Float:", b)

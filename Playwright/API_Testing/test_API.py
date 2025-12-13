@@ -8,6 +8,7 @@ def test_getAuthToken(playwright):
 
     assert authToken is not None
 
+
 def test_addToCart(playwright):
     print(f"\nexecution of addToCart is started...")
     response = addToCartZaraCoat3(playwright)
@@ -16,6 +17,7 @@ def test_addToCart(playwright):
 
     assert response.status == 200
     assert response.json()["message"] == "Product Added To Cart"
+
 
 def test_createOrder(playwright):
     print(f"\nexecution of createOrder is started...")

@@ -2,7 +2,8 @@ from PythonBasics.OOPS.parent import BaseCarModel
 
 
 class DeluxeCarModel(BaseCarModel):
-    deluxe_price = 200000 + BaseCarModel.price # deluxe price of the car variant
+    deluxe_price = 200000 + BaseCarModel.price  # deluxe price of the car variant
+
     def __init__(self, model_name, year, isSunroof):
         super().__init__(model_name, year)
         self.feature = "Sunroof" if isSunroof else "No Sunroof"
@@ -13,6 +14,7 @@ class DeluxeCarModel(BaseCarModel):
 
     def get_price(self):
         return self.deluxe_price
+
 
 # Example usage:
 car2 = DeluxeCarModel("Sedan LX Deluxe", 2025, isSunroof=True)

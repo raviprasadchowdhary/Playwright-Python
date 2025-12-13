@@ -22,23 +22,23 @@ dictionary = {
     , "favoritwQuotes": ("Stop holding back, go for it", "Fear is just a state of mind", "Fear nobody but yourself")
     , "nullValue": None
     , 1: "This is a key with integer type"
-    , (2,3): "This is a key with tuple type"
+    , (2, 3): "This is a key with tuple type"
     , True: "This is a key with boolean type"
     , 3.14: "This is a key with float type"
     , 3 + 4j: "This is a key with complex number type"
     , None: "This is a key with None type"
     , "duplicateKey": "First Value"
     , "duplicateKey": "Second Value"  # This will overwrite the first value
-    , "listAsKey": [1,2,3]  # This will raise a TypeError as lists are unhashable
+    , "listAsKey": [1, 2, 3]  # This will raise a TypeError as lists are unhashable
     # , "dictAsKey": {"key": "value"}  # This will raise a TypeError as dictionaries are unhashable
-    , frozenset([1,2,3]): "This is a key with frozenset type"  # frozenset is hashable
+    , frozenset([1, 2, 3]): "This is a key with frozenset type"  # frozenset is hashable
     , b'byteKey': "This is a key with bytes type"  # bytes is hashable
     # , bytearray(b'byteArrayKey'): "This is a key with bytearray type"  # bytearray is unhashable
     , range(5): "This is a key with range type"  # range is hashable
-    , complex(1,2): "This is a key with complex type"
-    , "setAsKey": {1,2,3}  # This will raise a TypeError as sets are unhashable
-    , "frozenSetAsKey": frozenset([4,5,6])  # frozenset is hashable
-    , "tupleAsKey": (4,5,6)  # tuple is hashable
+    , complex(1, 2): "This is a key with complex type"
+    , "setAsKey": {1, 2, 3}  # This will raise a TypeError as sets are unhashable
+    , "frozenSetAsKey": frozenset([4, 5, 6])  # frozenset is hashable
+    , "tupleAsKey": (4, 5, 6)  # tuple is hashable
 }
 
 # accessing elements of a dictionary
@@ -64,15 +64,15 @@ print("The street address is: ", dictionary.get("address").get("street"))
 
 # accessing elements using keys of different data types
 print("The integer key value is: ", dictionary[1])
-print("The tuple key value is: ", dictionary[(2,3)])
+print("The tuple key value is: ", dictionary[(2, 3)])
 print("The boolean key value is: ", dictionary[True])
 print("The float key value is: ", dictionary[3.14])
 print("The complex number key value is: ", dictionary[3 + 4j])
 print("The None key value is: ", dictionary[None])
-print("The frozenset key value is: ", dictionary[frozenset([1,2,3])])
+print("The frozenset key value is: ", dictionary[frozenset([1, 2, 3])])
 print("The bytes key value is: ", dictionary[b'byteKey'])
 print("The range key value is: ", dictionary[range(5)])
-print("The complex key value is: ", dictionary[complex(1,2)])
+print("The complex key value is: ", dictionary[complex(1, 2)])
 print("The frozenSetAsKey value is: ", dictionary["frozenSetAsKey"])
 print("The tupleAsKey value is: ", dictionary["tupleAsKey"])
 # print("The listAsKey value is: ", dictionary[ [1,2,3] ])  # Uncommenting this line will raise a TypeError

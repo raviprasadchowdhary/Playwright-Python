@@ -7,9 +7,11 @@ def sample_fixture():
     yield
     print("\nTeardown: Executing after the test module")
 
+
 def test_example_one(sample_fixture):
     print("Execution of the test example one")
     assert True
+
 
 def test_example_two(sample_fixture):
     print("Execution of the test example two")

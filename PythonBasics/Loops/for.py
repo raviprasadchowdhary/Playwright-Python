@@ -22,10 +22,10 @@ studentDetails = {
     , "isStudent": False
     , "address": {
         "House Number": 123
-        ,"addressLine1": "Church Street"
-        ,"addressLine2": "4th Cross"
-        ,"city": "Pune"
-        ,"State": "MH"
+        , "addressLine1": "Church Street"
+        , "addressLine2": "4th Cross"
+        , "city": "Pune"
+        , "State": "MH"
         , "Country": "India"
     }
 }
@@ -38,10 +38,10 @@ for key in studentDetails:
         print(key, ": ", studentDetails[key])
 
 # Example of using the range() function with a for loop:
-for i in range(5): # generates numbers from 0 to 4
+for i in range(5):  # generates numbers from 0 to 4
     print(i)
 
-for i in range(1,10,2):  # start from 1, go up to (but not including) 10, step by 2
+for i in range(1, 10, 2):  # start from 1, go up to (but not including) 10, step by 2
     print(i)
 
 # Example of nested for loops:
@@ -63,4 +63,3 @@ for i in range(3):
 else:
     print("Loop completed without break")
 # The else block will execute only if the loop completes normally (i.e., not terminated by a break statement).
-
