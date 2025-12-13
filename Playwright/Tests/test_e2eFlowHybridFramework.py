@@ -4,6 +4,8 @@ import time
 import pytest
 from playwright.sync_api import Playwright, expect
 
+from utils.apiBase import APIUtils
+
 with open("Playwright/Tests/Data/credentials.json") as f:
     test_data = json.load(f)
     test_credentials = test_data["credentials"]
@@ -20,9 +22,14 @@ def test_e2eTest_createOrderAndVerify(playwright: Playwright, test_credentials_l
     page.get_by_placeholder("enter your passsword").fill(test_credentials_list["password"])
     page.get_by_role("button", name="Login").click()
 
-    OrderButton = page.get_by_role("button", name="Orders")
+    orderId = APIUtils.createOrder(playwright, userCredentials=test_credentials_list)
 
+    OrderButton = page.get_by_role("button", name="Orders")
     expect(OrderButton).to_be_visible()
     OrderButton.click()
+
+    page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
+
+    expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
 
     time.sleep(3)
