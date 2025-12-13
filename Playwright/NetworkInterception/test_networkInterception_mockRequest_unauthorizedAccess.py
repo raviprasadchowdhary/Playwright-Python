@@ -1,4 +1,5 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 
 def interceptRequest(route):
     route.continue_(url="https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=6937107f32ed86587126a601")

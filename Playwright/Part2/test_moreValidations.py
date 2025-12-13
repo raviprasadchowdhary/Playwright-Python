@@ -1,6 +1,3 @@
-import time
-from time import sleep
-
 from playwright.sync_api import Page, expect
 
 

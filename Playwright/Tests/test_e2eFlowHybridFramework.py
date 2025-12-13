@@ -1,5 +1,4 @@
 import json
-import time
 
 import pytest
 from playwright.sync_api import Playwright, expect
@@ -31,5 +30,3 @@ def test_e2eTest_createOrderAndVerify(playwright: Playwright, test_credentials_l
     page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
 
     expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
-
-    time.sleep(3)

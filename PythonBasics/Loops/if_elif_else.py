@@ -1,6 +1,5 @@
 # if, else if, else statements in Python
 from openpyxl.descriptors import Integer
-from openpyxl.pivot.fields import Number
 
 # Python uses 'elif' for 'else if' statements
 # Python does not have a switch-case statement like some other languages

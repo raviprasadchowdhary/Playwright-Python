@@ -1,7 +1,7 @@
 import time
-from operator import contains
 
 from playwright.sync_api import Page
+
 
 def interceptResponse(route):
     route.fulfill(
