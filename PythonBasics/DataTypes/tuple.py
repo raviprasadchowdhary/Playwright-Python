@@ -3,7 +3,7 @@
 # Tuple is defined using parentheses () and elements are separated by commas
 
 # Creating a tuple
-tuple = (1,2,3.1,3.2, True, False, "Raviprasad", "Chowdhary", 3+4j, 1+9j)
+tuple = (1, 2, 3.1, 3.2, True, False, "Raviprasad", "Chowdhary", 3 + 4j, 1 + 9j)
 print("The elements of the tuple are: ", tuple)
 
 # Accessing elements of a tuple

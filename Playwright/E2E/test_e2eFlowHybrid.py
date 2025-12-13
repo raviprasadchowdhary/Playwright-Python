@@ -6,7 +6,7 @@ from utils.apiBase import APIUtils
 
 
 def test_createOrderAndVerify(playwright: Playwright):
-    #setup
+    # setup
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
@@ -25,6 +25,6 @@ def test_createOrderAndVerify(playwright: Playwright):
     page.get_by_role("button", name="ORDERS").click()
     assert orderId == page.locator("tbody tr th").nth(0).text_content()
 
-    page.locator("tr").filter(has_text=orderId).get_by_role("button",name="View").click()
+    page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
 
     time.sleep(2)

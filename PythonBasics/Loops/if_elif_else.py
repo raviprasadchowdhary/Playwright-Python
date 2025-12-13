@@ -16,9 +16,9 @@ from openpyxl.descriptors import Integer
 
 # code to find if age falls in child, teenager, adult category
 age = 10
-if age<13:
+if age < 13:
     print("The person is: Child")
-elif 12 >= age >19:
+elif 12 >= age > 19:
     print("The person is: Teenager")
 else:
     print("The person is adult")

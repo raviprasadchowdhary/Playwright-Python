@@ -5,8 +5,9 @@ from playwright.sync_api import Page
 
 def interceptResponse(route):
     route.fulfill(
-        json = { "data": [], "message": "No Orders"}
+        json={"data": [], "message": "No Orders"}
     )
+
 
 def test_network_interception_no_orders(page: Page):
     # login

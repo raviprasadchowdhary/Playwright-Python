@@ -1,13 +1,15 @@
 from playwright.sync_api import Page
 
+
 def test_playwrightBasicsGoToPage(playwright):
-    browser = playwright.chromium.launch(headless=False) # Launch the browser
-    context = browser.new_context() # Create a new browser context
-    page = context.new_page() # Create a new page in the browser context
-    page.goto("https://rahulshettyacademy.com/") # Navigate to the URL
+    browser = playwright.chromium.launch(headless=False)  # Launch the browser
+    context = browser.new_context()  # Create a new browser context
+    page = context.new_page()  # Create a new page in the browser context
+    page.goto("https://rahulshettyacademy.com/")  # Navigate to the URL
+
 
 def test_playwrightBasicsGoToPageShortcut(page):
-    page.goto("https://rahulshettyacademy.com/") # Navigate to the URL
+    page.goto("https://rahulshettyacademy.com/")  # Navigate to the URL
     # The browser and context are managed automatically by the fixture
     # Here default is headless=True
     # Here Chromium browser is used by default
@@ -25,8 +27,9 @@ def test_playwrightBasicsGoToPageShortcut(page):
     # This ensures test isolation and prevents state leakage between tests
     # Overall, using the page fixture is the recommended way to write Playwright tests in pytest
 
+
 def test_playwrightBasicsImportPage(page: Page):
-    page.goto("https://rahulshettyacademy.com/") # Navigate to the URL
+    page.goto("https://rahulshettyacademy.com/")  # Navigate to the URL
     # Here we explicitly import the Page type from playwright.sync_api
     # This allows us to use type hints for better code clarity and IDE support
     # The page parameter is of type Page, which represents a single tab or window in the browser

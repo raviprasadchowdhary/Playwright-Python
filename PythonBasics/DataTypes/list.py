@@ -5,8 +5,8 @@
 # lists are mutable (can be changed after creation)
 
 # creating a list with different data types
-values = [1,2,2.5,"Raviprasad",True,3+4j]
-print("values in the List are: ",values)
+values = [1, 2, 2.5, "Raviprasad", True, 3 + 4j]
+print("values in the List are: ", values)
 
 # accessing elements in the list using index
 # accessing first and last element
@@ -17,7 +17,7 @@ print("last element in the list Value is:", values[-1])
 print("values of the elements 2nd to 4th are: ", values[1:4])
 
 # insert an element in the list at a specific index
-values.insert(4,"Chowdhary")
+values.insert(4, "Chowdhary")
 print("List after adding an element in between the list: ", values)
 
 # append an element at the end of the list

@@ -1,9 +1,11 @@
 from playwright.sync_api import Playwright
 
+
 # *************************************************Functions************************************************************
 # here we are creating a reusable API request context
 def apiRequestContext(playwright: Playwright):
-    return  playwright.request.new_context(base_url="https://rahulshettyacademy.com", ignore_https_errors=True)
+    return playwright.request.new_context(base_url="https://rahulshettyacademy.com", ignore_https_errors=True)
+
 
 # here we are creating a reusable function to get the auth token
 def getAuthToken(playwright):
@@ -12,18 +14,21 @@ def getAuthToken(playwright):
                                 , data=getAuthTokenRequestBody)
     return response.json()["token"]
 
+
 # here we are creating a reusable function to add Zara Coat 3 to cart
 def addToCartZaraCoat3(playwright):
     return apiRequestContext(playwright).post("/api/ecom/user/add-to-cart"
-                                                  , data = addToCartRequestBodyZaraCoat3
-                                                  , headers={"Authorization": getAuthToken(playwright)}
+                                              , data=addToCartRequestBodyZaraCoat3
+                                              , headers={"Authorization": getAuthToken(playwright)}
                                               )
+
 
 # here we are creating a reusable function to create order for Zara Coat 3
 def createOrder(playwright):
-    return apiRequestContext(playwright).post(url= "/api/ecom/order/create-order"
-                                       , headers={"Authorization": getAuthToken(playwright)}
-                                       , data=createOrderRequestBodyZaraCoat3)
+    return apiRequestContext(playwright).post(url="/api/ecom/order/create-order"
+                                              , headers={"Authorization": getAuthToken(playwright)}
+                                              , data=createOrderRequestBodyZaraCoat3)
+
 
 # *************************************************Variables************************************************************
 userEmail = "RahulKumar@gmail.com"
@@ -34,7 +39,7 @@ userPassword = "Rahul@123"
 getAuthTokenRequestBody = {
     "userEmail": userEmail,
     "userPassword": userPassword
-    }
+}
 
 # here we are creating reusable request body for adding Zara Coat 3 to cart
 addToCartRequestBodyZaraCoat3 = {
@@ -65,4 +70,3 @@ createOrderRequestBodyZaraCoat3 = {
         }
     ]
 }
-

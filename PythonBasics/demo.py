@@ -13,5 +13,3 @@ b, c, d = 5, 10.5, "Test"
 print(b)
 print(c)
 print(d)
-
-
