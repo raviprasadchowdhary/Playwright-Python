@@ -5,6 +5,7 @@ from playwright.sync_api import Playwright, expect
 
 from Playwright.Framework.PageObjects.dashboardPage import DashboardPage
 from Playwright.Framework.PageObjects.loginPage import LoginPage
+from Playwright.Framework.PageObjects.ordersPage import OrdersPage
 from utils.apiBase import APIUtils
 
 with open("Playwright/Framework/Data/credentials.json") as f:
@@ -29,6 +30,8 @@ def test_e2eTest_createOrderAndVerify(playwright: Playwright, test_credentials_l
     dashboardPage = DashboardPage(page)
     dashboardPage.click_order_button()
 
-    page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
+    # page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
+    orderDetailsPage = OrdersPage(page)
+    orderDetailsPage.clickViewByOrderId(orderId)
 
     expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
