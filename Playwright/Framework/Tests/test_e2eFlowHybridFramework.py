@@ -21,9 +21,7 @@ def test_e2eTest_createOrderAndVerify(playwright: Playwright, test_credentials_l
     loginPage = LoginPage(page)
     loginPage.navigate()
 
-    page.get_by_placeholder("email@example.com").fill(test_credentials_list["username"])
-    page.get_by_placeholder("enter your passsword").fill(test_credentials_list["password"])
-    page.get_by_role("button", name="Login").click()
+    loginPage.login(test_credentials_list)
 
     orderId = APIUtils.createOrder(playwright, userCredentials=test_credentials_list)
 
