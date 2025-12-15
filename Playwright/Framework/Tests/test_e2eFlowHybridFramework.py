@@ -20,18 +20,12 @@ def test_e2eTest_createOrderAndVerify(playwright: Playwright, test_credentials_l
     context = browser.new_context()
     page = context.new_page()
 
-    loginPage = LoginPage(page)
-    loginPage.navigate()
-
-    loginPage.login(test_credentials_list)
-
     orderId = APIUtils.createOrder(playwright, userCredentials=test_credentials_list)
 
-    dashboardPage = DashboardPage(page)
-    dashboardPage.click_order_button()
-
-    # page.locator("tr").filter(has_text=orderId).get_by_role("button", name="View").click()
-    orderDetailsPage = OrdersPage(page)
+    loginPage = LoginPage(page)
+    loginPage.navigate()
+    dashboardPage = loginPage.login(test_credentials_list)
+    orderDetailsPage = dashboardPage.click_order_button()
     orderDetailsPage.clickViewByOrderId(orderId)
 
     expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
