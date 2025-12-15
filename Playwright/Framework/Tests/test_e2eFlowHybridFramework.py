@@ -3,9 +3,7 @@ import json
 import pytest
 from playwright.sync_api import Playwright, expect
 
-from Playwright.Framework.PageObjects.dashboardPage import DashboardPage
 from Playwright.Framework.PageObjects.loginPage import LoginPage
-from Playwright.Framework.PageObjects.ordersPage import OrdersPage
 from utils.apiBase import APIUtils
 
 with open("Playwright/Framework/Data/credentials.json") as f:

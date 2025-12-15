@@ -1,4 +1,3 @@
-from Playwright.Framework.PageObjects import dashboardPage
 from Playwright.Framework.PageObjects.dashboardPage import DashboardPage
 
 
