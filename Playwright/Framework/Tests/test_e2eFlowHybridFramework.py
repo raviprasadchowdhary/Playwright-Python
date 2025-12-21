@@ -14,6 +14,7 @@ with open("Playwright/Framework/Data/credentials.json") as f:
 print(f"Test data loaded from json file: {test_data}")
 
 @pytest.mark.smoke
+@pytest.mark.e2e
 @pytest.mark.parametrize("test_credentials_list", test_credentials)
 def test_e2eTest_createOrderAndVerify(playwright: Playwright, browser_instance, test_credentials_list):
     # here we will create order by API call
