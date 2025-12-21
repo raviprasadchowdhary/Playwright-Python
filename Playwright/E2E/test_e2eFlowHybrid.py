@@ -2,7 +2,7 @@ import time
 
 from playwright.sync_api import Playwright
 
-from utils.apiBaseFramework import APIUtils
+from utils.apiBase import APIUtils
 
 
 def test_createOrderAndVerify(playwright: Playwright):
