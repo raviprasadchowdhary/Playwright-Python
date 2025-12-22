@@ -543,6 +543,128 @@ pip install pytest-html
 pytest --html=report.html --self-contained-html
 ```
 
+### Run Tests in Parallel (pytest-xdist)
+
+**Install pytest-xdist plugin:**
+
+```bash
+pip install pytest-xdist
+```
+
+**Run tests in parallel using multiple workers:**
+
+```bash
+# Run tests using 4 workers (processes)
+pytest -n 4
+
+# Run tests using auto-detection of CPU count
+pytest -n auto
+
+# Run tests with 2 workers and verbose output
+pytest -n 2 -v
+
+# Run specific directory in parallel
+pytest Playwright/part1/ -n auto
+
+# Run with verbose output and parallel execution
+pytest -n auto -v
+```
+
+**Benefits of Parallel Testing:**
+- Significantly faster test execution
+- Better resource utilization
+- Ideal for large test suites
+- Reduces overall CI/CD pipeline time
+
+**Example Usage:**
+
+```bash
+# Run all tests in parallel with auto-detected CPU count
+pytest -n auto
+
+# Run Framework tests in parallel with 4 workers
+pytest Playwright/Framework/Tests/ -n 4 -v
+
+# Run API tests in parallel with detailed output
+pytest Playwright/API_Testing/ -n auto -vv
+```
+
+**Notes on Parallel Execution:**
+- Each worker runs in a separate process
+- Tests must be independent and not share state
+- Network interception tests work well with parallel execution
+- Some fixtures may need adjustment for parallel runs
+
+### Combine Parallel Execution with Report Generation
+
+```bash
+# Run tests in parallel and generate HTML report
+pytest -n auto --html=report.html --self-contained-html
+
+# Run with multiple workers, verbose output, and report
+pytest -n 4 -v --html=report.html --self-contained-html
+
+# Run API tests in parallel with comprehensive reporting
+pytest Playwright/API_Testing/ -n auto -v --html=api_report.html --self-contained-html
+```
+
+## 📊 Report Generation with pytest-html
+
+**Install pytest-html plugin:**
+
+```bash
+python -m pip install pytest-html
+```
+
+**Generate basic HTML report:**
+
+```bash
+pytest --html=report.html
+```
+
+**Generate self-contained HTML report (includes all CSS/JS inline):**
+
+```bash
+pytest --html=report.html --self-contained-html
+```
+
+**Generate report with additional options:**
+
+```bash
+# Report with detailed output
+pytest --html=report.html --self-contained-html -v
+
+# Report with screenshot capture (if available)
+pytest --html=report.html --self-contained-html --screenshot=on
+
+# Report with custom name and timestamp
+pytest --html=report_$(date +%Y%m%d_%H%M%S).html --self-contained-html
+```
+
+**Report Features:**
+- Clear test execution summary
+- Pass/fail/skip/error statistics
+- Individual test details with duration
+- Error messages and stack traces
+- HTML format viewable in any browser
+- Self-contained option for easy sharing
+
+**Example Report Commands by Test Type:**
+
+```bash
+# Framework tests with HTML report
+pytest Playwright/Framework/Tests/ --html=framework_report.html --self-contained-html -v
+
+# API tests with detailed report
+pytest Playwright/API_Testing/ --html=api_report.html --self-contained-html -vv
+
+# E2E tests with parallel execution and report
+pytest Playwright/E2E/ -n auto --html=e2e_report.html --self-contained-html -v
+
+# All tests with parallel execution, verbose output, and report
+pytest -n auto --html=complete_report.html --self-contained-html -v
+```
+
 ## 🌟 Key Features
 
 ✅ **Multiple Testing Approaches**
