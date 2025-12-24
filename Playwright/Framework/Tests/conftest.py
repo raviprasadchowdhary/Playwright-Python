@@ -15,7 +15,7 @@ def pytest_addoption(parser):
         help="Browser name to run tests against (chromium, firefox, webkit)",
     )
     parser.addoption(
-        "--tracing",
+        "--custom-tracing",
         action="store",
         default="on",
         choices=["on", "off"],
@@ -26,7 +26,7 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="function")
 def browser_instance(playwright, request):
     browser_name = request.config.getoption("--browser_name")
-    tracing_enabled = request.config.getoption("--tracing") == "on"
+    tracing_enabled = request.config.getoption("--custom-tracing") == "on"
 
     if browser_name == "chrome":
         browser = playwright.chromium.launch(headless=False)
