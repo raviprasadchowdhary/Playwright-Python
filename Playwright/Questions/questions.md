@@ -5,6 +5,7 @@
 **Answer:**
 
 **Key Differences:**
+
 | Feature | List | Tuple |
 |---------|------|-------|
 | **Mutability** | Mutable (can be modified) | Immutable (cannot be changed) |
@@ -165,6 +166,7 @@ person2.display()
 **Best Practice:** Use `open()` function with context manager (`with` statement) for safe file operations.
 
 **File Modes:**
+
 | Mode | Description | Creates File |
 |------|-------------|--------------|
 | `'r'` | Read (default) | No |
@@ -470,6 +472,7 @@ print(f"Even doubled (>2): {result}")  # Output: [6, 8, 10]
 **Answer:**
 
 **Two Main Methods:**
+
 | Method | Type | Modifies Original | Returns | Use Case |
 |--------|------|-------------------|---------|----------|
 | `list.sort()` | In-place | Yes | None | When you want to modify the original list |
@@ -632,6 +635,7 @@ print(f"Addition: {calc.add(5, 3)}")  # self = calc
 **Answer:**
 
 **Three Main Methods:**
+
 | Method | Type | Modifies Original | Returns | Use Case |
 |--------|------|-------------------|---------|----------|
 | `list.reverse()` | In-place | Yes | None | Modify existing list |
@@ -682,6 +686,7 @@ for student in students:
 **Answer:**
 
 **Comparison:**
+
 | Feature | Instance Method | Class Method | Static Method |
 |---------|----------------|--------------|---------------|
 | **Decorator** | None | `@classmethod` | `@staticmethod` |
@@ -828,6 +833,7 @@ def browser_instance(playwright, request):
 **Answer:**
 
 **Command Options:**
+
 | Command | Description | Use Case |
 |---------|-------------|----------|
 | `pytest --lf` or `--last-failed` | Run only tests that failed in the last run | Quick debugging |
@@ -1028,6 +1034,7 @@ with resource_manager("Database") as res:
 **Answer:**
 
 **Exception Handling Components:**
+
 | Block | Purpose | When It Runs |
 |-------|---------|--------------|
 | `try` | Contains code that might raise exception | Always |
