@@ -3,11 +3,332 @@
   <head>
     <meta charset="utf-8"/>
     <title id="head-title">report.html</title>
-      <link href="assets\style.css" rel="stylesheet" type="text/css"/>
+      <style type="text/css">body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  /* do not increase min-width as some may use split screens */
+  min-width: 800px;
+  color: #999;
+}
+
+h1 {
+  font-size: 24px;
+  color: black;
+}
+
+h2 {
+  font-size: 16px;
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+a {
+  color: #999;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+#environment td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+#environment tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+#environment ul {
+  margin: 0;
+  padding: 0 20px;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed,
+.passed .col-result {
+  color: green;
+}
+
+span.skipped,
+span.xfailed,
+span.rerun,
+.skipped .col-result,
+.xfailed .col-result,
+.rerun .col-result {
+  color: orange;
+}
+
+span.error,
+span.failed,
+span.xpassed,
+.error .col-result,
+.failed .col-result,
+.xpassed .col-result {
+  color: red;
+}
+
+.col-links__extra {
+  margin-right: 3px;
+}
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+#results-table {
+  border: 1px solid #e6e6e6;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+}
+#results-table th,
+#results-table td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+#results-table th {
+  font-weight: bold;
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+.logwrapper {
+  max-height: 230px;
+  overflow-y: scroll;
+  background-color: #e6e6e6;
+}
+.logwrapper.expanded {
+  max-height: none;
+}
+.logwrapper.expanded .logexpander:after {
+  content: "collapse [-]";
+}
+.logwrapper .logexpander {
+  z-index: 1;
+  position: sticky;
+  top: 10px;
+  width: max-content;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin: 10px 0 10px calc(100% - 80px);
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+.logwrapper .logexpander:after {
+  content: "expand [+]";
+}
+.logwrapper .logexpander:hover {
+  color: #000;
+  border-color: #000;
+}
+.logwrapper .log {
+  min-height: 40px;
+  position: relative;
+  top: -50px;
+  height: calc(100% + 50px);
+  border: 1px solid #e6e6e6;
+  color: black;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  padding-right: 80px;
+  white-space: pre-wrap;
+}
+
+div.media {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 240px;
+  margin: 0 5px;
+  overflow: hidden;
+  width: 320px;
+}
+
+.media-container {
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  align-items: center;
+  flex: 1 1;
+  overflow: hidden;
+  height: 200px;
+}
+
+.media-container--fullscreen {
+  grid-template-columns: 0px auto 0px;
+}
+
+.media-container__nav--right,
+.media-container__nav--left {
+  text-align: center;
+  cursor: pointer;
+}
+
+.media-container__viewport {
+  cursor: pointer;
+  text-align: center;
+  height: inherit;
+}
+.media-container__viewport img,
+.media-container__viewport video {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+
+.media__name,
+.media__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 25px;
+  align-items: center;
+}
+
+.collapsible td:not(.col-links) {
+  cursor: pointer;
+}
+.collapsible td:not(.col-links):hover::after {
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.col-result {
+  width: 130px;
+}
+.col-result:hover::after {
+  content: " (hide details)";
+}
+
+.col-result.collapsed:hover::after {
+  content: " (show details)";
+}
+
+#environment-header h2:hover::after {
+  content: " (hide details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#environment-header.collapsed h2:hover::after {
+  content: " (show details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+  cursor: pointer;
+}
+.sortable.desc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: -12.5px;
+  border: 10px solid #4caf50;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.sortable.asc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: 12.5px;
+  border: 10px solid #4caf50;
+  border-top: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.hidden, .summary__reload__button.hidden {
+  display: none;
+}
+
+.summary__data {
+  flex: 0 0 550px;
+}
+.summary__reload {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+}
+.summary__reload__button {
+  flex: 0 0 300px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  background-color: #4caf50;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.summary__reload__button:hover {
+  background-color: #46a049;
+}
+.summary__spacer {
+  flex: 0 0 550px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+}
+.filters button,
+.collapse button {
+  color: #999;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filters button:hover,
+.collapse button:hover {
+  color: #ccc;
+}
+
+.filter__label {
+  margin-right: 10px;
+}
+
+      </style>
+    
   </head>
   <body>
     <h1 id="title">report.html</h1>
-    <p>Report generated on 23-Dec-2025 at 13:30:47 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+    <p>Report generated on 24-Dec-2025 at 22:06:57 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
         v4.1.1</p>
     <div id="environment-header">
       <h2>Environment</h2>
@@ -61,7 +382,7 @@
         <h2>Summary</h2>
         <div class="additional-summary prefix">
         </div>
-        <p class="run-count">29 tests took 00:10:02.</p>
+        <p class="run-count">2 tests took 00:00:54.</p>
         <p class="filter">(Un)check the boxes to filter the results.</p>
         <div class="summary__reload">
           <div class="summary__reload__button hidden" onclick="location.reload()">
@@ -71,10 +392,10 @@
         <div class="summary__spacer"></div>
         <div class="controls">
           <div class="filters">
-            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" />
-            <span class="failed">1 Failed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" disabled/>
+            <span class="failed">0 Failed,</span>
             <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" />
-            <span class="passed">28 Passed,</span>
+            <span class="passed">2 Passed,</span>
             <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled/>
             <span class="skipped">0 Skipped,</span>
             <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled/>
@@ -108,7 +429,7 @@
     </table>
   </body>
   <footer>
-    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.13.7&#34;, &#34;Platform&#34;: &#34;Windows-11-10.0.22631-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;8.4.2&#34;, &#34;pluggy&#34;: &#34;1.6.0&#34;}, &#34;Plugins&#34;: {&#34;base-url&#34;: &#34;2.1.0&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;, &#34;playwright&#34;: &#34;0.7.1&#34;, &#34;xdist&#34;: &#34;3.8.0&#34;}, &#34;Base URL&#34;: &#34;&#34;}, &#34;tests&#34;: {&#34;Playwright/API_Testing/test_API.py::test_getAuthToken&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/API_Testing/test_API.py::test_getAuthToken&#34;, &#34;duration&#34;: &#34;00:00:26&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/API_Testing/test_API.py::test_getAuthToken&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:26&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\nexecution of getAuthToken is started...\nAuthentication token is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTM0MDFjMjMyZWQ4NjU4NzEyMjI4MTgiLCJ1c2VyRW1haWwiOiJSYWh1bEt1bWFyQGdtYWlsLmNvbSIsInVzZXJNb2JpbGUiOjU1NTUyNjc4NzgsInVzZXJSb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3NjY0NzY3MzIsImV4cCI6MTc5ODAzNDMzMn0.XEIwOYtPVExIn49N4k2SasvGlVZGizilmWw7_ddtOSI\n&#34;}], &#34;Playwright/API_Testing/test_API.py::test_createOrder&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/API_Testing/test_API.py::test_createOrder&#34;, &#34;duration&#34;: &#34;00:00:26&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/API_Testing/test_API.py::test_createOrder&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:26&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\nexecution of createOrder is started...\n\nStatus code is: 201\n\nResponse body is: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694a4bbc32ed865871479172&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n&#34;}], &#34;Playwright/API_Testing/test_API.py::test_addToCart&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/API_Testing/test_API.py::test_addToCart&#34;, &#34;duration&#34;: &#34;299 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/API_Testing/test_API.py::test_addToCart&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;299 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\nexecution of addToCart is started...\nStatus code is: 200\n\nResponse body is: \n{&amp;#x27;message&amp;#x27;: &amp;#x27;Product Added To Cart&amp;#x27;}\n&#34;}], &#34;Playwright/E2E/test_e2eFlowHybrid.py::test_createOrderAndVerify&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/E2E/test_e2eFlowHybrid.py::test_createOrderAndVerify&#34;, &#34;duration&#34;: &#34;00:00:12&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/E2E/test_e2eFlowHybrid.py::test_createOrderAndVerify&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:12&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkNTA3ODMyZWQ4NjU4NzEzMTA0OTgiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo2NjY2NTM0NTY3LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2NzQzLCJleHAiOjE3OTgwMzQzNDN9.3zNqkWZwCNxTS9PlxyRG3dE8VzMWtJJepKvsOP32Q_E&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d507832ed865871310498&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694a4bc732ed8658714791d2&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\nOrder ID from API is: 694a4bc732ed8658714791d2\n&#34;}], &#34;Playwright/NetworkInterception/test_injectSessionCookiesIntoBrowserAtRunTime.py::test_injectSessionCookiesIntoBrowserAtRunTime&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/NetworkInterception/test_injectSessionCookiesIntoBrowserAtRunTime.py::test_injectSessionCookiesIntoBrowserAtRunTime&#34;, &#34;duration&#34;: &#34;00:00:40&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/NetworkInterception/test_injectSessionCookiesIntoBrowserAtRunTime.py::test_injectSessionCookiesIntoBrowserAtRunTime&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:40&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw3] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkNTA3ODMyZWQ4NjU4NzEzMTA0OTgiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo2NjY2NTM0NTY3LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2NzQyLCJleHAiOjE3OTgwMzQzNDJ9.FIBNFr9INm8gu_hKjy333EEdE3wo5QJkYSNXMpf9uz4&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d507832ed865871310498&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\nToken is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkNTA3ODMyZWQ4NjU4NzEzMTA0OTgiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo2NjY2NTM0NTY3LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2NzQyLCJleHAiOjE3OTgwMzQzNDJ9.FIBNFr9INm8gu_hKjy333EEdE3wo5QJkYSNXMpf9uz4\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkNTA3ODMyZWQ4NjU4NzEzMTA0OTgiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo2NjY2NTM0NTY3LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2NzQ0LCJleHAiOjE3OTgwMzQzNDR9.r6AHs4Q99AMHyr-voj2APGTjr4HVpm0Tarc4I6wRFqM&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d507832ed865871310498&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694a4bc932ed8658714791ec&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n&#34;}], &#34;Playwright/Part2/test_moreValidations.py::test_alerts_dialog[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Part2/test_moreValidations.py::test_alerts_dialog[chromium]&#34;, &#34;duration&#34;: &#34;00:00:22&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Part2/test_moreValidations.py::test_alerts_dialog[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:22&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/NetworkInterception/test_networkInterception_mockresponse_noOrders.py::test_network_interception_no_orders[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/NetworkInterception/test_networkInterception_mockresponse_noOrders.py::test_network_interception_no_orders[chromium]&#34;, &#34;duration&#34;: &#34;00:00:56&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/NetworkInterception/test_networkInterception_mockresponse_noOrders.py::test_network_interception_no_orders[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:56&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\nMessage is:  You have No Orders to show at this time. Please Visit Back Us \n&#34;}], &#34;Playwright/Part2/test_moreValidations.py::test_validateTableContent[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Part2/test_moreValidations.py::test_validateTableContent[chromium]&#34;, &#34;duration&#34;: &#34;00:00:08&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Part2/test_moreValidations.py::test_validateTableContent[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:08&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\nPrice column index is: 1\nPrice of Rice is: 37\n&#34;}], &#34;Playwright/Part2/test_moreValidations.py::test_iframe_handling[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Part2/test_moreValidations.py::test_iframe_handling[chromium]&#34;, &#34;duration&#34;: &#34;00:00:20&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Part2/test_moreValidations.py::test_iframe_handling[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:20&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/NetworkInterception/test_networkInterception_mockRequest_unauthorizedAccess.py::test_networkInterception_unAuthorizedAccess[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/NetworkInterception/test_networkInterception_mockRequest_unauthorizedAccess.py::test_networkInterception_unAuthorizedAccess[chromium]&#34;, &#34;duration&#34;: &#34;00:00:18&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/NetworkInterception/test_networkInterception_mockRequest_unauthorizedAccess.py::test_networkInterception_unAuthorizedAccess[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:18&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw3] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPageShortcut[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPageShortcut[chromium]&#34;, &#34;duration&#34;: &#34;00:00:12&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPageShortcut[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:12&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&#34;, &#34;duration&#34;: &#34;00:01:13&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:01:13&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw2] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkM2NjNTMyZWQ4NjU4NzEzMGUzZTAiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbGMub20iLCJ1c2VyTW9iaWxlIjo0NDQ0MjMzNDU2LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2NzQ0LCJleHAiOjE3OTgwMzQzNDR9.vovjuSL-AADs6o1oe52W5urdihBzdbyIxbOtM2kdODo&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d3cc532ed86587130e3e0&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694a4bc932ed8658714791f6&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n--------------------------- Captured stdout teardown ---------------------------\n\n\u2705 Trace saved at: C:\\Users\\916992\\github\\PythonPlaywright\\Playwright\\Framework\\Tests\\traces\\trace_test_e2eTest_createOrderAndVerify[test_credentials_list0].zip\n&#34;}], &#34;Playwright/part1/test_coreLocators.py::test_core_locators[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_coreLocators.py::test_core_locators[chromium]&#34;, &#34;duration&#34;: &#34;00:00:22&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_coreLocators.py::test_core_locators[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:22&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw3] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/Part2/test_moreValidations.py::test_getByPlaceHolder[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Part2/test_moreValidations.py::test_getByPlaceHolder[chromium]&#34;, &#34;duration&#34;: &#34;00:00:25&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Part2/test_moreValidations.py::test_getByPlaceHolder[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:25&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/Part2/test_moreValidations.py::test_mouseHover[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Part2/test_moreValidations.py::test_mouseHover[chromium]&#34;, &#34;duration&#34;: &#34;00:00:25&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Part2/test_moreValidations.py::test_mouseHover[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:25&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/part1/test_handleChildWindowsAndTabs.py::test_handleChildWindowsAndTabs[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_handleChildWindowsAndTabs.py::test_handleChildWindowsAndTabs[chromium]&#34;, &#34;duration&#34;: &#34;00:00:15&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_handleChildWindowsAndTabs.py::test_handleChildWindowsAndTabs[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:15&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\nNewly opened page title is: RS Academy\n\nRed content is: Please email us at mentor@rahulshettyacademy.com with below template to receive response \n\nExtracted email id is: mentor@rahulshettyacademy.com\n&#34;}], &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsImportPage[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsImportPage[chromium]&#34;, &#34;duration&#34;: &#34;00:00:11&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsImportPage[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:11&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation3&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation3&#34;, &#34;duration&#34;: &#34;10 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation3&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;10 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test class\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation3\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after the test class\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation12&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation12&#34;, &#34;duration&#34;: &#34;39 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation12&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;39 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test session\n\nSetup: Executing before the test module\n\nSetup: Executing before each test function\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation2\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after each test function\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation13&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation13&#34;, &#34;duration&#34;: &#34;36 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation13&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;36 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test class\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation3\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation14&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation14&#34;, &#34;duration&#34;: &#34;00:00:16&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation2.py::TestValidationClass::test_validation14&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:16&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw4] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation4\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after the test class\n\nTeardown: Executing after the test module\n\nTeardown: Executing after the test session\n&#34;}], &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPage&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPage&#34;, &#34;duration&#34;: &#34;00:00:29&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_differentWaysToGoToPage.py::test_playwrightBasicsGoToPage&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:29&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw3] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&#34;, &#34;duration&#34;: &#34;00:00:39&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:39&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw2] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkM2NmNzMyZWQ4NjU4NzEzMGU0NGEiLCJ1c2VyRW1haWwiOiJSb2hhbkNob3dkaGFyeUBnbWFpbGMub20iLCJ1c2VyTW9iaWxlIjo1NTQ1NDMzNDU2LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NDc2Nzg3LCJleHAiOjE3OTgwMzQzODd9.1ZZqcp7pJ_8qZaxuMgfaDSr5bGPWaEPTYdFZMrBlw3c&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d3cf732ed86587130e44a&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694a4bf332ed8658714792ae&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n--------------------------- Captured stdout teardown ---------------------------\n\n\u2705 Trace saved at: C:\\Users\\916992\\github\\PythonPlaywright\\Playwright\\Framework\\Tests\\traces\\trace_test_e2eTest_createOrderAndVerify[test_credentials_list1].zip\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation1&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation1&#34;, &#34;duration&#34;: &#34;558 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation1&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;558 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw2] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test session\n\nSetup: Executing before the test module\n\nSetup: Executing before each test function\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation1\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after each test function\n\nTeardown: Executing after the test module\n\nTeardown: Executing after the test session\n&#34;}], &#34;Playwright/part1/test_loginAndAddProductsToCart.py::test_loginAndAddProductsToCart[chromium]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_loginAndAddProductsToCart.py::test_loginAndAddProductsToCart[chromium]&#34;, &#34;duration&#34;: &#34;00:00:36&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_loginAndAddProductsToCart.py::test_loginAndAddProductsToCart[chromium]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:36&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation2&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation2&#34;, &#34;duration&#34;: &#34;00:00:13&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation1.py::test_validation2&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:13&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw3] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test session\n\nSetup: Executing before the test module\n\nSetup: Executing before each test function\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation2\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after each test function\n\nTeardown: Executing after the test module\n\nTeardown: Executing after the test session\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation4&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation4&#34;, &#34;duration&#34;: &#34;00:00:04&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation1.py::TestValidationClass::test_validation4&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:04&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw1] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test class\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation4\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after the test class\n&#34;}], &#34;Playwright/part1/test_firefoxBrowser.py::test_firefox_browser&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;Playwright/part1/test_firefoxBrowser.py::test_firefox_browser&#34;, &#34;duration&#34;: &#34;00:00:48&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Failed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/part1/test_firefoxBrowser.py::test_firefox_browser&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:48&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\nplaywright = &amp;lt;playwright._impl._playwright.Playwright object at 0x000001FD481D82F0&amp;gt;\n\n    def test_firefox_browser(playwright: Playwright):\n        firefox = playwright.firefox\n        browser = firefox.launch(headless=False)\n        context = browser.new_context()\n        page = context.new_page()\n&amp;gt;       page.goto(&amp;quot;https://rahulshettyacademy.com/loginpagePractise/&amp;quot;)\n\nPlaywright\\part1\\test_firefoxBrowser.py:9: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n..\\..\\AppData\\Roaming\\Python\\Python313\\site-packages\\playwright\\sync_api\\_generated.py:9019: in goto\n    self._sync(\n..\\..\\AppData\\Roaming\\Python\\Python313\\site-packages\\playwright\\_impl\\_page.py:555: in goto\n    return await self._main_frame.goto(**locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\..\\AppData\\Roaming\\Python\\Python313\\site-packages\\playwright\\_impl\\_frame.py:153: in goto\n    await self._channel.send(\n..\\..\\AppData\\Roaming\\Python\\Python313\\site-packages\\playwright\\_impl\\_connection.py:69: in send\n    return await self._connection.wrap_api_call(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = &amp;lt;playwright._impl._connection.Connection object at 0x000001FD4803AE40&amp;gt;, cb = &amp;lt;function Channel.send.&amp;lt;locals&amp;gt;.&amp;lt;lambda&amp;gt; at 0x000001FD484B2CA0&amp;gt;, is_internal = False\ntitle = None\n\n    async def wrap_api_call(\n        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None\n    ) -&amp;gt; Any:\n        if self._api_zone.get():\n            return await cb()\n        task = asyncio.current_task(self._loop)\n        st: List[inspect.FrameInfo] = getattr(\n            task, &amp;quot;__pw_stack__&amp;quot;, None\n        ) or inspect.stack(0)\n    \n        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)\n        self._api_zone.set(parsed_st)\n        try:\n            return await cb()\n        except Exception as error:\n&amp;gt;           raise rewrite_error(error, f&amp;quot;{parsed_st[&amp;#x27;apiName&amp;#x27;]}: {error}&amp;quot;) from None\nE           playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.\nE           Call log:\nE             - navigating to &amp;quot;https://rahulshettyacademy.com/loginpagePractise/&amp;quot;, waiting until &amp;quot;load&amp;quot;\n\n..\\..\\AppData\\Roaming\\Python\\Python313\\site-packages\\playwright\\_impl\\_connection.py:559: TimeoutError\n&#34;}], &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation11&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation11&#34;, &#34;duration&#34;: &#34;00:00:04&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;PytestBasics/ConfTest/test_pyTestValidation2.py::test_validation11&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:04&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;[gw0] win32 -- Python 3.13.7 C:\\Program Files\\Python313\\python.exe\n\n---------------------------- Captured stdout setup -----------------------------\n\nSetup: Executing before the test session\n\nSetup: Executing before the test module\n\nSetup: Executing before each test function\n\n----------------------------- Captured stdout call -----------------------------\nExecuting test validation1\n--------------------------- Captured stdout teardown ---------------------------\n\nTeardown: Executing after each test function\n\nTeardown: Executing after the test module\n\nTeardown: Executing after the test session\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.13.7&#34;, &#34;Platform&#34;: &#34;Windows-11-10.0.22631-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;9.0.2&#34;, &#34;pluggy&#34;: &#34;1.6.0&#34;}, &#34;Plugins&#34;: {&#34;allure-pytest&#34;: &#34;2.15.2&#34;, &#34;Faker&#34;: &#34;39.0.0&#34;, &#34;base-url&#34;: &#34;2.1.0&#34;, &#34;cov&#34;: &#34;7.0.0&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;, &#34;mock&#34;: &#34;3.15.1&#34;, &#34;playwright&#34;: &#34;0.7.2&#34;, &#34;rerunfailures&#34;: &#34;16.1&#34;, &#34;timeout&#34;: &#34;2.4.0&#34;, &#34;xdist&#34;: &#34;3.8.0&#34;}, &#34;Base URL&#34;: &#34;&#34;}, &#34;tests&#34;: {&#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&#34;, &#34;duration&#34;: &#34;00:00:41&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list0]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:41&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkM2NjNTMyZWQ4NjU4NzEzMGUzZTAiLCJ1c2VyRW1haWwiOiJSYWh1bENob3dkaGFyeUBnbWFpbGMub20iLCJ1c2VyTW9iaWxlIjo0NDQ0MjMzNDU2LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NTk0MTkyLCJleHAiOjE3OTgxNTE3OTJ9.pQbV7k026XJ2dGi4heZ7JCImHvg0nFpxsmYZhx8IByg&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d3cc532ed86587130e3e0&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694c1691c941646b7a62682e&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n--------------------------- Captured stdout teardown ---------------------------\n\nTrace saved at: C:\\Users\\916992\\github\\PythonPlaywright\\Playwright\\Framework\\Tests\\traces\\trace_test_e2eTest_createOrderAndVerify[test_credentials_list0].zip\n&#34;}], &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&#34;, &#34;duration&#34;: &#34;00:00:13&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;Playwright/Framework/Tests/test_e2eFlowHybridFramework.py::test_e2eTest_createOrderAndVerify[test_credentials_list1]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:13&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n Login/getToken response body is: \n{&amp;#x27;token&amp;#x27;: &amp;#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTNkM2NmNzMyZWQ4NjU4NzEzMGU0NGEiLCJ1c2VyRW1haWwiOiJSb2hhbkNob3dkaGFyeUBnbWFpbGMub20iLCJ1c2VyTW9iaWxlIjo1NTQ1NDMzNDU2LCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzY2NTk0MjA1LCJleHAiOjE3OTgxNTE4MDV9.WX8xI9cuW957cE2vKDZdEdICG4N8fHTfVBKYyM-P3RY&amp;#x27;, &amp;#x27;userId&amp;#x27;: &amp;#x27;693d3cf732ed86587130e44a&amp;#x27;, &amp;#x27;message&amp;#x27;: &amp;#x27;Login Successfully&amp;#x27;}\n\n Create order response body: \n{&amp;#x27;orders&amp;#x27;: [&amp;#x27;694c169dc941646b7a626845&amp;#x27;], &amp;#x27;productOrderId&amp;#x27;: [&amp;#x27;68a961459320a140fe1ca57a&amp;#x27;], &amp;#x27;message&amp;#x27;: &amp;#x27;Order Placed Successfully&amp;#x27;}\n--------------------------- Captured stdout teardown ---------------------------\n\nTrace saved at: C:\\Users\\916992\\github\\PythonPlaywright\\Playwright\\Framework\\Tests\\traces\\trace_test_e2eTest_createOrderAndVerify[test_credentials_list1].zip\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
     <script>
       (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
